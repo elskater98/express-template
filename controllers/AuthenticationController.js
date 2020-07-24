@@ -1,9 +1,7 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config');
-const mongoose = require('mongoose');
 const User = require('../schemas/user');
 const bcrypt = require('bcrypt');
-
 
  async  function generateToken (user) {
 
