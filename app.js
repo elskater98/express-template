@@ -1,6 +1,4 @@
 /* Imports */
-import {UserSchema} from "./schemas/user";
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
@@ -9,6 +7,8 @@ const config = require('./config');
 const mongoose = require('mongoose');
 const User = require('./schemas/user');
 const user = require('./routes/user');
+const authentication = require('./routes/authentication');
+const bcrypt = require('bcrypt');
 
 /* Initialization*/
 const app = express();
@@ -25,6 +25,7 @@ app.use(cors({
 
 /*Routes*/
 app.use('/user',user);
+app.use('/auth',authentication);
 
 /*Connection MongoDB*/
 mongoose.connect(config.database, {useNewUrlParser: true,useFindAndModify:false,useCreateIndex:true,useUnifiedTopology:true});
@@ -42,9 +43,10 @@ console.log('The server is running on '+ config.port+' ...');
 });
 
 /* Initialize Admin */
-User.find({}).countDocuments().then(count =>{
+User.find({}).countDocuments().then(async (count) => {
     if(count === 0){
-        const user = new User({first_name: 'Admin',last_name: 'Node Template',email: 'admin@admin.com',password:'password',roles:['Administrator']});
+        let password = await bcrypt.hash('password', 10);
+        const user = new User({first_name: 'Admin',last_name: 'Node Template',email: 'admin@admin.com',password:password,roles:['Administrator']});
         user.save();
         console.log("User: "+ JSON.stringify(user) +" had been created successfully.")
     }
