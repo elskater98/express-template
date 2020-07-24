@@ -1,0 +1,34 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "Template Node.js project",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm start app.js",
+    "serve": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elskater98/Node.js_Template.git"
+  },
+  "keywords": [
+    "Node.js",
+    "Express",
+    "JWT"
+  ],
+  "author": "Francesc Contreras Perez",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/elskater98/Node.js_Template/issues"
+  },
+  "homepage": "https://github.com/elskater98/Node.js_Template#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "body-parser": "^1.19.0",
+  },
+  "devDependencies": {
+    "cors": "^2.8.5",
+    "helmet": "^3.23.3"
+  }
+}
