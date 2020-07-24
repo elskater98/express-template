@@ -28,7 +28,15 @@ const UserSchema = mongoose.Schema({
         maxLength:64,
         required:'Password is required.'
     },
-    roles:[String]
+    roles:[String],
+    createdAt:{
+        type:Date,
+        default:new Date().toDateString()
+    },
+    enable:{
+        type:Boolean,
+        default:true
+    }
 });
 
 module.exports = mongoose.model('User',UserSchema);

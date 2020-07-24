@@ -1,4 +1,6 @@
 /* Imports */
+import {UserSchema} from "./schemas/user";
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
@@ -39,10 +41,11 @@ app.listen(port, () => {
 console.log('The server is running on '+ config.port+' ...');
 });
 
-/* Init Admin */
-if(User.find({email:'admin@admin.com'}) == null){
-    let user = {first_name: 'Admin',last_name: 'Node Template',email: 'admin@admin.com',password:'password',roles:['Administrator']};
-    const admin = new User();
-    admin.save();
-    console.log("User: "+ JSON.stringify(user) +" had been created successfully.")
-}
+/* Initialize Admin */
+User.find({}).countDocuments().then(count =>{
+    if(count === 0){
+        const user = new User({first_name: 'Admin',last_name: 'Node Template',email: 'admin@admin.com',password:'password',roles:['Administrator']});
+        user.save();
+        console.log("User: "+ JSON.stringify(user) +" had been created successfully.")
+    }
+});
