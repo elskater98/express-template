@@ -72,7 +72,11 @@ exports.editUser = async (req,res,next) => {
 }
 
 exports.deleteUser = async (req,res,next) => {
-
+    User.remove({email:req.params.id}).then(()=>{
+        res.status(200).send({message:"User deleted."})
+    }).catch((error)=>{
+        res.status(400).send({error:error});
+    })
 }
 
 exports.resetPassword = async (req,res,next) => {
