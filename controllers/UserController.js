@@ -67,12 +67,12 @@ exports.editUser = async (req,res,next) => {
         });
 
     }).catch((error)=>{
-        res.status(400).send({error:error});
+        res.status(404).send({error:error});
     });
 }
 
 exports.deleteUser = async (req,res,next) => {
-    User.remove({email:req.params.id}).then(()=>{
+    User.deleteOne({email:req.params.id}).then(()=>{
         res.status(200).send({message:"User deleted."})
     }).catch((error)=>{
         res.status(400).send({error:error});
@@ -80,5 +80,23 @@ exports.deleteUser = async (req,res,next) => {
 }
 
 exports.resetPassword = async (req,res,next) => {
+    let old_password = req.body.old_password;
+    let password = req.body.password;
+    let _password = req.body._password;
 
+    const user = await User.findOne({email:req.body.email},{password:1});
+    if(await bcrypt.compare(old_password,user.password)){
+        if(password === _password){
+            User.updateOne({email:req.body.email},
+                {$set:{password:await bcrypt.hash(req.body.password, 10),}}).then(()=>{
+                    res.status(200).send({message:"Password updated successfully."});
+            }).catch((error)=>{
+                res.status(500).send({error:error});
+            })
+        }else{
+            res.status(400).send({error:"Password do not match."});
+        }
+    }else{
+        res.status(400).send({error:"Password do not match."});
+    }
 }
