@@ -20,14 +20,18 @@ exports.ValidateUser = async (req, res, next) => {
         if(verify_password){
             const token = await generateToken(user);
             res.header("x-auth-token",token).send({
-                'first name': user.first_name,
-                'last name': user.last_name,
+                first_name: user.first_name,
+                last_name: user.last_name,
                 email:user.email,
+                enable:user['enable'],
+                roles:user.roles,
                 success:true,
                 token:token
             });
         }else{
             res.status(400).send({message:'Wrong email or password.'});
         }
+    }else{
+        res.status(404).send({message:'User not found.'})
     }
 }
