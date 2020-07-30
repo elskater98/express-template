@@ -32,6 +32,43 @@ exports.createUser = async (req,res,next) => {
 
 exports.editUser = async (req,res,next) => {
 
+    User.findOne({email:req.params.id},{password:0,__v:0,createdAt:0}).then((user)=>{
+
+        if(Object.keys(req.body).includes('email')){
+            user['email'] = req.body.email;
+        }
+
+        if(Object.keys(req.body).includes('first_name')){
+            user['first_name'] = req.body.first_name;
+        }
+
+        if(Object.keys(req.body).includes('last_name')){
+            user['last_name'] = req.body.last_name;
+        }
+
+        if(Object.keys(req.body).includes('enable')){
+            user['enable'] = req.body.enable;
+        }
+
+        if(Object.keys(req.body).includes('roles')){
+            user['roles'] = req.body.roles;
+        }
+
+        User.updateOne({email:req.params.id},{
+            $set:{email:user.email,
+                enable:user.enable,
+                first_name:user.first_name,
+                last_name:user.last_name,
+                roles:user.roles}
+        }).then(()=>{
+            res.status(200).send({message:"User updated."})
+        }).catch((error)=>{
+            res.status(400).send({error:error});
+        });
+
+    }).catch((error)=>{
+        res.status(400).send({error:error});
+    });
 }
 
 exports.deleteUser = async (req,res,next) => {
