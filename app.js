@@ -51,3 +51,5 @@ User.find({}).countDocuments().then(async (count) => {
         console.log("User: "+ JSON.stringify(user) +" had been created successfully.")
     }
 });
+
+module.exports = app;
