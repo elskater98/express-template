@@ -14,8 +14,7 @@ const bcrypt = require('bcrypt');
 
 exports.ValidateUser = async (req, res, next) => {
      const user = await User.findOne({email:req.query.email});
-
-    if(user.length !== 0){
+     if(user !== null){
         const verify_password = await bcrypt.compare(req.query.password,user.password);
         if(verify_password){
             const token = await generateToken(user);
@@ -32,6 +31,6 @@ exports.ValidateUser = async (req, res, next) => {
             res.status(400).send({message:'Wrong email or password.'});
         }
     }else{
-        res.status(404).send({message:'User not found.'})
-    }
+         res.status(404).send({message:"User not found."})
+     }
 }
