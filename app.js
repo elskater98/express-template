@@ -28,7 +28,7 @@ app.use('/user',user);
 app.use('/auth',authentication);
 
 /*Connection MongoDB*/
-mongoose.connect(config.database, {useNewUrlParser: true,useFindAndModify:false,useCreateIndex:true,useUnifiedTopology:true});
+mongoose.connect(config.devel_database, {useNewUrlParser: true,useFindAndModify:false,useCreateIndex:true,useUnifiedTopology:true});
 
 const db = mongoose.connection;
 db.on('error',console.error.bind(console,'Failed connection.'));
