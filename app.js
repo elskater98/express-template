@@ -9,7 +9,7 @@ const User = require('./schemas/user');
 const user = require('./routes/user');
 const authentication = require('./routes/authentication');
 const bcrypt = require('bcrypt');
-
+const dotenv = require('dotenv').config();
 /* Initialization*/
 const app = express();
 app.use(bodyParser.json({limit:'50mb'}));
