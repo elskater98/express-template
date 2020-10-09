@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken');
 const config = require('./../config');
 
+/*Middleware*/
+
 module.exports = {authorize};
 function authorize (req, res, next){
     const token = req.query.token || req.body.token || req.params.token || req.headers['authorization'] || req.headers['x-access-token'];
