@@ -34,7 +34,7 @@
     "mongoose": "^5.9.25",
     "mongoose-validator": "^2.1.0",
     "supertest": "^4.0.2",
-    "validator": "^13.1.1"
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "cors": "^2.8.5",
